@@ -2,11 +2,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-const API_URL = (
-  process.env.NEXT_PUBLIC_API_URL ||
-  process.env.VITE_API_URL ||
-  "https://6a89d65120fcac8c1edf0434.mockapi.io"
-).replace(/\/+$/, "");
+const API_URL = "https://6a89d65120fcac8c1edf0434.mockapi.io";
 
 type UseGetResult<T> = {
   data: T | undefined;
