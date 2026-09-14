@@ -94,11 +94,11 @@ function Footer() {
         <div className="flex flex-col gap-5 border-t border-black/10 pt-5 text-xs text-black/50 md:flex-row md:items-center md:justify-between">
           <p>Shop.co © 2000-2023, All Rights Reserved</p>
           <div className="flex gap-2" aria-label="Payment image placeholders">
-            <div className="h-7 w-12 flex items-center justify-center rounded border border-black/10 bg-white" ><Image src={Badge} alt=""/></div>
-            <div className="h-7 w-12 flex items-center justify-center rounded border border-black/10 bg-white" ><Image src={Badge_1} alt=""/></div>
-            <div className="h-7 w-12 flex items-center justify-center rounded border border-black/10 bg-white" ><Image src={Badge_2} alt=""/></div>
-            <div className="h-7 w-12 flex items-center justify-center rounded border border-black/10 bg-white" ><Image src={Badge_3} alt=""/></div>
-            <div className="h-7 w-12 flex items-center justify-center rounded border border-black/10 bg-white" ><Image src={Badge_4} alt=""/></div>
+            <div className="h-7 w-12 flex items-center justify-center rounded " ><Image src={Badge} className="w-full object-contain" alt=""/></div>
+            <div className="h-7 w-12 flex items-center justify-center rounded " ><Image src={Badge_1} className="w-full object-contain" alt=""/></div>
+            <div className="h-7 w-12 flex items-center justify-center rounded " ><Image src={Badge_2} className="w-full object-contain" alt=""/></div>
+            <div className="h-7 w-12 flex items-center justify-center rounded " ><Image src={Badge_3} className="w-full object-contain" alt=""/></div>
+            <div className="h-7 w-12 flex items-center justify-center rounded " ><Image src={Badge_4} className="w-full object-contain" alt=""/></div>
           </div>
         </div>
       </div>

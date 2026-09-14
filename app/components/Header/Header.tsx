@@ -48,7 +48,7 @@ function Header() {
             <input className="placeholder-[#00000066] text-[#00000066] py-1 w-full" type="text" placeholder="Search for products..." />
           </div>
           <div className="flex items-center gap-4">
-            <Image src={searchImg} alt=""/>
+            <Image className="block md:hidden" src={searchImg} alt=""/>
             <Image src={cartImg} alt=""/>
             <Image src={acctImg} alt=""/>
           </div>

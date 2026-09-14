@@ -1,6 +1,7 @@
 import useGet from "@/app/hooks/useGet";
 import type { ProductTypes } from "@/app/Types/ProductTypes";
 import Image from "next/image";
+import Link from "next/link";
 
 function ProductPage() {
   const { data: products = [] } = useGet<ProductTypes[]>("products");
@@ -24,7 +25,7 @@ function ProductPage() {
         <div className="grid grid-cols-2 gap-4 px-4 md:grid-cols-4">
           {sortedByRating?.slice(0, 4).map((el) => {
             return(
-              <div key={el.id} className="flex flex-col gap-2 md:gap-4">
+              <Link href={`/OnePageProduct/${el.id}`} key={el.id} className="flex flex-col gap-2 md:gap-4">
                 <div className="group relative aspect-square w-full max-w-75 overflow-hidden rounded-[20px] bg-[#F0EEED] p-2 md:p-8">
                   <Image src={el.thumbnail} className="object-contain p-2 transition-transform duration-300 ease-out group-hover:scale-110" alt={el.title} fill sizes="(max-width: 768px) 50vw, 25vw" />
                 </div>
@@ -49,7 +50,7 @@ function ProductPage() {
                     )}
                   </div>
                 </div>
-              </div>
+              </Link>
             )
           })}
         </div>
@@ -64,7 +65,7 @@ function ProductPage() {
         <div className="grid grid-cols-2 gap-4 px-4 md:grid-cols-4">
           {sortedByStock?.slice(0, 4).map((el) => {
             return(
-              <div key={el.id} className="flex flex-col gap-2 md:gap-4">
+              <Link href={`/OnePageProduct/${el.id}`} key={el.id} className="flex flex-col gap-2 md:gap-4">
                 <div className="group relative aspect-square w-full max-w-75 overflow-hidden rounded-[20px] bg-[#F0EEED] p-2 md:p-8">
                   <Image src={el.thumbnail} className="object-contain p-2 transition-transform duration-300 ease-out group-hover:scale-110" alt={el.title} fill sizes="(max-width: 768px) 50vw, 25vw" />
                 </div>
@@ -89,7 +90,7 @@ function ProductPage() {
                     )}
                   </div>
                 </div>
-              </div>
+              </Link>
             )
           })}
         </div>
