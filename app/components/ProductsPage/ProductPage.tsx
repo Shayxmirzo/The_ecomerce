@@ -10,7 +10,7 @@ function ProductPage() {
     ...Array.from(new Set(products.map((product) => product.category))),
   ];
   return (
-    <div className="container mx-auto flex flex-col gap-16 px-4 py-18">
+    <div className="container mx-auto flex flex-col gap-20 px-4 py-18">
       {categories.map((category) => {
         const categoryProducts = products.filter(
           (product) => product.category === category
