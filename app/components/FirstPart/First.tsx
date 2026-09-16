@@ -3,13 +3,13 @@ import Image from "next/image"
 function First() {
   return (
     <div className="relative min-h-162.5 bg-[#F2F0F1] overflow-hidden md:min-h-0">
-        <div className="absolute inset-x-0 bottom-0 top-100 bg-contain bg-bottom bg-no-repeat md:hidden" style={{ backgroundImage: "url('/Rectangle 2 (1).png')" }} />
+        <div className="absolute inset-x-0 bottom-0 top-80 bg-contain bg-bottom bg-no-repeat md:hidden" style={{ backgroundImage: "url('/Rectangle 2 (1).png')" }} />
         <div className="absolute inset-0 hidden bg-cover bg-center bg-no-repeat md:block" style={{ backgroundImage: "url('/Rectangle 2.png')" }} />
         <div className="container relative mx-auto px-4 py-4 md:px-0 md:py-28 ">
             <div className="flex flex-col gap-5 md:gap-10">
                 <div className="w-full max-w-145 flex flex-col gap-3 md:gap-8">
-                <h1 className="text-[36px] font-black leading-[0.95] md:text-[64px]">FIND CLOTHES THAT MATCHES YOUR STYLE</h1>
-                <p className="text-[11px] leading-4 text-[darkgray] md:text-[16px]">Browse through our diverse range of meticulously crafted garments, designed to bring out your individuality and cater to your sense of style.</p>
+                <h1 className="text-[42px] font-black leading-[0.95] md:text-[64px]">FIND CLOTHES THAT MATCHES YOUR STYLE</h1>
+                <p className="text-[14px] leading-4 text-[darkgray] md:text-[16px]">Browse through our diverse range of meticulously crafted garments, designed to bring out your individuality and cater to your sense of style.</p>
             </div>
             <div className="w-full">
                 <button className="w-full rounded-full bg-black py-3 text-[12px] text-white md:max-w-50 md:py-4 md:text-[18px]">Shop Now</button>

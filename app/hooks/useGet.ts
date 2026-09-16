@@ -2,7 +2,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-const API_URL = "https://6a89d65120fcac8c1edf0434.mockapi.io";
+const API_URL = "https://fakestoreapi.com";
 
 type UseGetResult<T> = {
   data: T | undefined;
@@ -21,7 +21,7 @@ function useGet<T = unknown>(url: string): UseGetResult<T> {
         : `${API_URL}/${cleanUrl}`;
 
       const response = await axios.get(requestUrl);
-      return (response.data.products ?? response.data) as T;
+      return response.data as T;
     },
     enabled: Boolean(url),
   });

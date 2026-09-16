@@ -7,10 +7,17 @@ import img from "@/public/Frame (2).svg"
 import cartImg from "@/public/Frame.svg"
 import acctImg from "@/public/Frame (1).svg"
 import searchImg from "@/public/Frame (3).svg"
-import menuImg from "@/public/Frame (4).svg"
+
+function HomeIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24" className="h-5 w-5 fill-none stroke-current" strokeWidth="1.8">
+      <path strokeLinecap="round" strokeLinejoin="round" d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V10Z" />
+    </svg>
+  )
+}
+
 function Header() {
   const [SignInhide, setSignInhide] = useState<boolean>(false)
-  const [menuOpen, setMenuOpen] = useState(false)
   return (
     <div className="sticky top-0 z-30 w-full">
       <div className={SignInhide ? "hidden": "bg-[black]"}>
@@ -27,10 +34,7 @@ function Header() {
       </div>
       <div className="bg-white">
         <div className=" px-4 py-2 md:container mx-auto md:py-4 flex justify-between items-center">
-          <div className="flex gap-2">
-            <button type="button" className="block md:hidden" onClick={() => setMenuOpen(true)} aria-label="Open menu">
-              <Image src={menuImg} alt="" />
-            </button>
+          <div>
             <h1 className="text-[24px] md:text-[32px]  font-black">SHOP.CO</h1>
           </div>
           <div className="hidden md:flex">
@@ -48,34 +52,29 @@ function Header() {
             <input className="placeholder-[#00000066] text-[#00000066] py-1 w-full" type="text" placeholder="Search for products..." />
           </div>
           <div className="flex items-center gap-4">
-            <Image className="block md:hidden" src={searchImg} alt=""/>
-            <Image src={cartImg} alt=""/>
-            <Image src={acctImg} alt=""/>
+            <Link href="/Cart" className="hidden md:block" aria-label="Cart">
+              <Image src={cartImg} alt="" />
+            </Link>
+            <Link href="#profile" className="hidden md:block" aria-label="Profile">
+              <Image src={acctImg} alt="" />
+            </Link>
           </div>
         </div>
       </div>
-      <div className={`fixed inset-0 z-40 md:hidden ${menuOpen ? "visible" : "invisible"}`}>
-        <button
-          type="button"
-          className={`absolute inset-0 bg-black/40 transition-opacity ${menuOpen ? "opacity-100" : "opacity-0"}`}
-          onClick={() => setMenuOpen(false)}
-          aria-label="Close menu"
-        />
-        <nav className={`relative h-full w-3/4 max-w-xs bg-white px-6 py-8 shadow-xl transition-transform duration-300 ${menuOpen ? "translate-x-0" : "-translate-x-full"}`}>
-          <div className="mb-10 flex items-center justify-between">
-            <h2 className="text-2xl font-black">SHOP.CO</h2>
-            <button type="button" onClick={() => setMenuOpen(false)} aria-label="Close menu" className="text-2xl">
-              ×
-            </button>
-          </div>
-          <ul className="flex flex-col gap-7 text-lg">
-            <li><button type="button" onClick={() => setMenuOpen(false)}>Shop</button></li>
-            <li><button type="button" onClick={() => setMenuOpen(false)}>On sale</button></li>
-            <li><button type="button" onClick={() => setMenuOpen(false)}>New Arrivals</button></li>
-            <li><button type="button" onClick={() => setMenuOpen(false)}>Brands</button></li>
-          </ul>
-        </nav>
-      </div>
+      <nav className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-4 border-t border-black/10 bg-white/95 pb-[env(safe-area-inset-bottom)] shadow-[0_-4px_16px_rgba(0,0,0,0.08)] backdrop-blur md:hidden" aria-label="Mobile navigation">
+        <Link href="/" className="flex min-h-16 items-center justify-center" aria-label="Home">
+          <HomeIcon />
+        </Link>
+        <Link href="#search" className="flex min-h-16 items-center justify-center" aria-label="Search">
+          <Image src={searchImg} alt="" className="h-5 w-5" />
+        </Link>
+        <Link href="/Cart" className="flex min-h-16 items-center justify-center" aria-label="Cart">
+          <Image src={cartImg} alt="" className="h-5 w-5" />
+        </Link>
+        <Link href="#profile" className="flex min-h-16 items-center justify-center" aria-label="Profile">
+          <Image src={acctImg} alt="" className="h-5 w-5" />
+        </Link>
+      </nav>
     </div>
   )
 }
