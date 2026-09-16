@@ -9,7 +9,7 @@ function Carousel() {
     "/Group (1).svg"
   ]
   return (
-    <div className="py-4 md:w-full overflow-hidden bg-[black] md:py-11">
+    <div className="py-3 md:w-full overflow-hidden bg-[black] md:py-11">
       <div className="flex w-max animate-marquee">
         <div className="flex shrink-0 items-center gap-24 pr-24">
           {brands.map((brand) => (
@@ -33,7 +33,7 @@ function Carousel() {
               width={160}
               height={36}
               alt="brand"
-              className="h-6 sm:h-8 md:h-12 w-auto"
+              className="h-5 sm:h-8 md:h-12 w-auto"
             />
           ))}
         </div>
