@@ -2,6 +2,7 @@
 "use client";
 
 import Image from "next/image";
+import { useState } from "react";
 import { useCartstore } from "@/app/Store/CartStore";
 
 function TrashIcon() {
@@ -34,11 +35,15 @@ function CartPart() {
   const increase = useCartstore((state) => state.increase);
   const decrease = useCartstore((state) => state.decrease);
   const remove = useCartstore((state) => state.deleteFromCart);
+  const [promoCode, setPromoCode] = useState("");
+  const [promoApplied, setPromoApplied] = useState(false);
 
-  const subtotal = cart.reduce((total, item) => total + item.product.price * item.qty, 0);
-  const discount = subtotal * 0.2;
-  const delivery = cart.length ? 15 : 0;
-  const total = subtotal - discount + delivery;
+  const totalPrice = useCartstore((state) => state.totalPrice());
+  const total = promoApplied ? totalPrice * 0.8 : totalPrice;
+
+  function applyPromoCode() {
+    setPromoApplied(promoCode.trim().toUpperCase() === "SALE20%");
+  }
 
   return (
     <section className="w-full min-w-0 bg-white px-2 py-4 text-black sm:px-6 sm:py-6 md:px-8 md:py-10">
@@ -56,7 +61,7 @@ function CartPart() {
             <div className="min-w-0 rounded-[18px] border border-black/10 px-2 sm:px-5">
               {cart.map((item, index) => (
                 <article key={item.product.id} className={`relative flex min-w-0 gap-2 py-2.5 sm:gap-4 sm:py-4 ${index ? "border-t border-black/10" : ""}`}>
-                  <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-[9px] bg-[#f0f0f0] sm:h-[106px] sm:w-[106px]">
+                  <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-[9px] bg-[#f0f0f0] sm:h-26.5 sm:w-26.5">
                     <Image src={item.product.image} alt={item.product.title} fill sizes="106px" className="object-contain p-2" />
                   </div>
                   <div className="flex min-w-0 flex-1 flex-col justify-between py-0.5 sm:py-1">
@@ -83,19 +88,14 @@ function CartPart() {
 
             <aside className="min-w-0 rounded-[18px] border border-black/10 p-3 sm:p-5 md:p-6">
               <h2 className="mb-3 text-[18px] font-bold sm:mb-4 sm:text-[22px]">Order Summary</h2>
-              <dl className="space-y-2.5 text-[12px] sm:space-y-3 sm:text-[15px]">
-                <div className="flex justify-between"><dt className="text-black/50">Subtotal</dt><dd className="font-bold">${subtotal.toFixed(0)}</dd></div>
-                <div className="flex justify-between"><dt className="text-black/50">Discount (-20%)</dt><dd className="font-bold text-[#ff3333]">-${discount.toFixed(0)}</dd></div>
-                <div className="flex justify-between"><dt className="text-black/50">Delivery Fee</dt><dd className="font-bold">${delivery.toFixed(0)}</dd></div>
-              </dl>
               <div className="my-4 border-t border-black/10" />
-              <div className="flex items-center justify-between"><span className="text-[14px]">Total</span><strong className="text-[20px]">${total.toFixed(0)}</strong></div>
+              <div className="flex items-center justify-between"><span className="font-medium text-[16px]">Total</span><strong className="font-medium text-[20px]">${total.toFixed(0)}</strong></div>
               <div className="mt-3 flex w-full min-w-0 gap-2 sm:mt-4">
                 <label className="flex h-10 min-w-0 flex-1 items-center gap-1.5 rounded-full bg-[#f1f1f1] px-2.5 text-[10px] text-black/35 sm:h-12 sm:gap-2 sm:px-4 sm:text-[13px]">
                   <TagIcon />
-                  <input aria-label="Promo code" placeholder="Add promo code" className="h-full min-w-0 w-full flex-1 bg-transparent outline-none placeholder:text-black/35" />
+                  <input aria-label="Promo code" value={promoCode} onChange={(event) => setPromoCode(event.target.value)} placeholder="Add promo code" className="h-full min-w-0 w-full flex-1 bg-transparent outline-none placeholder:text-black/35" />
                 </label>
-                <button type="button" className="shrink-0 rounded-full bg-black px-4 text-[11px] font-medium text-white transition-colors hover:bg-black/75 sm:px-6 sm:text-[13px]">Apply</button>
+                <button type="button" onClick={applyPromoCode} className="shrink-0 rounded-full bg-black px-4 text-[11px] font-medium text-white transition-colors hover:bg-black/75 sm:px-6 sm:text-[13px]">Apply</button>
               </div>
               <button type="button" className="mt-3 flex h-10 w-full items-center justify-center gap-2 rounded-full bg-black text-[11px] font-medium text-white transition-colors hover:bg-black/75 sm:mt-4 sm:h-12 sm:gap-3 sm:text-[13px]">
                 Go to Checkout <ArrowIcon />
