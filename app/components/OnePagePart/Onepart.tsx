@@ -8,6 +8,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
+import { useCartstore } from "@/app/Store/CartStore";
 const review = {
   name: "Sarah M.",
   review:
@@ -18,11 +19,12 @@ function OnePagePart() {
   const { id } = useParams<{ id: string }>();
   const { data: products = [] } = useGet<ProductTypes[]>("products");
   const product = products.find((item) => String(item.id) === id);
-    const getOldPrice = (product: ProductTypes) => {
-    if (!product.discountPercentage) return null;
-
-    return product.price / (1 - product.discountPercentage / 100);
-  };
+  const cart = useCartstore((state) => state.cart);
+  const increase = useCartstore((state) => state.increase);
+  const decrease = useCartstore((state) => state.decrease);
+  const addTocart = useCartstore((state) => state.addToCart);
+  const removeTocart = useCartstore((state) => state.deleteFromCart);
+  const cartItem = cart.find((item) => item.product.id === product?.id)
   return (
     <div className="container mx-auto pt-8 pb-0">
       {product ? 
@@ -49,20 +51,20 @@ function OnePagePart() {
                     <span className="text-xs font-black md:text-[32px]">{product.rating.rate.toFixed(1)}/5</span>
                   </div>
                   <div className="flex items-center gap-2 md:gap-3">
-                    <span className="text-lg font-bold md:text-[32px]">${product.price.toFixed(0)}</span>
-                    {getOldPrice(product) !== null && (
-                      <span className="text-[32px] font-black text-black/40 line-through md:text-2xl">
-                        ${getOldPrice(product)?.toFixed(2)}
-                      </span>
-                    )}
+                    <span className="text-lg font-bold md:text-[32px]">${cartItem? (cartItem.product.price * cartItem.qty).toFixed(1) : product.price.toFixed(1)}</span>
                   </div>
                 </div>
                 <div className="w-full md:border-b border-[gray] pb-5">
                     <p className="text-[#00000099] text-[16px] font-medium md:text-[20px]">{product.description}</p>
                 </div>
-                <div className="py-6">
-                    <button className="w-full rounded-full bg-[black] py-4 text-white font-medium duration-300 hover:bg-[gray]">
-                        Add to Cart
+                <div className="py-6 flex flex-col-reverse md:flex-row gap-5 items-center justify-between">
+                    <div className={cartItem ? "w-full md:w-auto px-10 py-4 md:gap-5 rounded-full text-[black] border flex items-center justify-between font-medium" : "hidden"}>
+                      <button onClick={() => decrease(product.id)}>-</button>
+                      <span>{cartItem?.qty}</span>
+                      <button onClick={() => increase(product)}>+</button>
+                    </div>
+                    <button onClick={() => cartItem ? removeTocart(product.id) : addTocart(product)} className="w-full rounded-full bg-[black] py-4 text-white font-medium duration-300 hover:bg-[gray]">
+                      {cartItem ? "Remove from Cart" : "Add to Cart"}
                     </button>
                 </div>
             </div>

@@ -11,7 +11,7 @@ function Carousel() {
   return (
     <div className="py-3 md:w-full overflow-hidden bg-[black] md:py-11">
       <div className="flex w-max animate-marquee">
-        <div className="flex shrink-0 items-center gap-24 pr-24">
+        <div className="flex shrink-0 items-center gap-20 pr-20">
           {brands.map((brand) => (
             <Image
               key={brand}
@@ -25,7 +25,7 @@ function Carousel() {
           ))}
         </div>
 
-        <div className="flex shrink-0 items-center gap-24 pr-24">
+        <div className="flex shrink-0 items-center gap-20 pr-20">
           {brands.map((brand) => (
             <Image
               key={`duplicate-${brand}`}

@@ -9,7 +9,5 @@ export interface ProductTypes {
     rate: number
     count: number
   }
-  thumbnail?: string
-  images?: string[]
-  discountPercentage?: number
+
 }

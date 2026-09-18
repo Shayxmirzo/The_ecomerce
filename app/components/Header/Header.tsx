@@ -7,6 +7,7 @@ import img from "@/public/Frame (2).svg"
 import cartImg from "@/public/Frame.svg"
 import acctImg from "@/public/Frame (1).svg"
 import searchImg from "@/public/Frame (3).svg"
+import { useCartstore } from "@/app/Store/CartStore"
 
 function HomeIcon() {
   return (
@@ -17,6 +18,7 @@ function HomeIcon() {
 }
 
 function Header() {
+  const cart = useCartstore((state) => state.cart);
   const [SignInhide, setSignInhide] = useState<boolean>(false)
   return (
     <div className="sticky top-0 z-30 w-full">
@@ -52,8 +54,13 @@ function Header() {
             <input className="placeholder-[#00000066] text-[#00000066] py-1 w-full" type="text" placeholder="Search for products..." />
           </div>
           <div className="flex items-center gap-4">
-            <Link href="/Cart" className="hidden md:block" aria-label="Cart">
+            <Link href="/Cart" className="relative hidden md:block" aria-label={`Cart, ${cart.length} items`}>
               <Image src={cartImg} alt="" />
+              {cart.length > 0 && (
+                <span className="absolute -right-2 -top-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-black px-1 text-xs font-bold text-white">
+                  {cart.length}
+                </span>
+              )}
             </Link>
             <Link href="#profile" className="hidden md:block" aria-label="Profile">
               <Image src={acctImg} alt="" />
@@ -68,8 +75,13 @@ function Header() {
         <Link href="#search" className="flex min-h-16 items-center justify-center" aria-label="Search">
           <Image src={searchImg} alt="" className="h-5 w-5" />
         </Link>
-        <Link href="/Cart" className="flex min-h-16 items-center justify-center" aria-label="Cart">
+        <Link href="/Cart" className="relative flex min-h-16 items-center justify-center" aria-label={`Cart, ${cart.length} items`}>
           <Image src={cartImg} alt="" className="h-5 w-5" />
+          {cart.length > 0 && (
+            <span className="absolute left-1/2 top-3 flex h-4 min-w-4 -translate-y-1/2 translate-x-1/2 items-center justify-center rounded-full bg-black px-1 text-[10px] font-bold leading-none text-white">
+              {cart.length}
+            </span>
+          )}
         </Link>
         <Link href="#profile" className="flex min-h-16 items-center justify-center" aria-label="Profile">
           <Image src={acctImg} alt="" className="h-5 w-5" />
