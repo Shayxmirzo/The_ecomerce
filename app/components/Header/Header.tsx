@@ -8,6 +8,8 @@ import cartImg from "@/public/Frame.svg"
 import acctImg from "@/public/Frame (1).svg"
 import searchImg from "@/public/Frame (3).svg"
 import { useCartstore } from "@/app/Store/CartStore"
+import useGet from "@/app/hooks/useGet"
+import { ProductTypes } from "@/app/Types/ProductTypes"
 
 function HomeIcon() {
   return (
@@ -20,6 +22,12 @@ function HomeIcon() {
 function Header() {
   const cart = useCartstore((state) => state.cart);
   const [SignInhide, setSignInhide] = useState<boolean>(false)
+  const [searchValue, setSearchValue] = useState("")
+  const { data: products = [] } = useGet<ProductTypes[]>("products")
+  const searchResults = products.filter((product) =>
+    product.title.toLowerCase().includes(searchValue.trim().toLowerCase()),
+  )
+
   return (
     <div className="sticky top-0 z-30 w-full">
       <div className={SignInhide ? "hidden": "bg-[black]"}>
@@ -39,21 +47,48 @@ function Header() {
           <div>
             <h1 className="text-[24px] md:text-[32px]  font-black">SHOP.CO</h1>
           </div>
-          <div className="hidden md:flex">
-            <ul className="flex items-center gap-6 text-[16px]">
-              <select name="" id="">
-                <option value="">Shop</option>
-              </select>
-              <li>On sale</li>
-              <li>New Arrivals</li>
-              <li>Brands</li>
-            </ul>
-          </div>
-          <div className="hidden md:max-w-145 w-full bg-[#F0F0F0] md:flex items-center gap-3 p-4 rounded-full">
+          <div className="relative hidden w-full md:flex md:max-w-180 items-center gap-3 rounded-full bg-[#F0F0F0] p-4">
             <Image src={img} alt=""/>
-            <input className="placeholder-[#00000066] text-[#00000066] py-1 w-full" type="text" placeholder="Search for products..." />
+            <input
+              className="w-full py-1 text-[#00000066] placeholder-[#00000066]"
+              type="search"
+              value={searchValue}
+              onChange={(event) => setSearchValue(event.target.value)}
+              placeholder="Search for products..."
+              aria-label="Search for products"
+            />
+            {searchValue.trim() && (
+              <div className="absolute left-0 right-0 top-full z-50 overflow-hidden rounded-b-3xl border border-t-0 border-black/10 bg-[#F0F0F0] shadow-lg">
+                {searchResults.length > 0 ? searchResults.map((product) => (
+                  <Link
+                    href={`/OnePageProduct/${product.id}`}
+                    key={product.id}
+                    className="flex items-center gap-3 border-b border-black/5 px-5 py-3 last:border-b-0 hover:bg-black/5"
+                  >
+                    <Image
+                      src={product.image}
+                      alt=""
+                      width={48}
+                      height={48}
+                      className="h-12 w-12 object-contain"
+                    />
+                    <span className="min-w-0 flex-1 truncate text-sm font-semibold">
+                      {product.title}
+                    </span>
+                    <span className="shrink-0 text-sm text-[#FFC633]" aria-label={`${product.rating.rate} out of 5 stars`}>
+                      {product.rating.rate.toFixed(1)} ★
+                    </span>
+                  </Link>
+                )) : (
+                  <p className="px-5 py-4 text-sm text-black/50">No products found</p>
+                )}
+              </div>
+            )}
           </div>
           <div className="flex items-center gap-4">
+            <Link href="/Filter" className="hidden md:block" aria-label="Profile">
+              <Image src={searchImg} alt="" />
+            </Link>
             <Link href="/Cart" className="relative hidden md:block" aria-label={`Cart, ${cart.length} items`}>
               <Image src={cartImg} alt="" />
               {cart.length > 0 && (
@@ -72,7 +107,7 @@ function Header() {
         <Link href="/" className="flex min-h-16 items-center justify-center" aria-label="Home">
           <HomeIcon />
         </Link>
-        <Link href="#search" className="flex min-h-16 items-center justify-center" aria-label="Search">
+        <Link href="/Filter" className="flex min-h-16 items-center justify-center" aria-label="Search">
           <Image src={searchImg} alt="" className="h-5 w-5" />
         </Link>
         <Link href="/Cart" className="relative flex min-h-16 items-center justify-center" aria-label={`Cart, ${cart.length} items`}>
