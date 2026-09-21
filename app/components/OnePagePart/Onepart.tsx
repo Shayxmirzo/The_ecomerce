@@ -57,13 +57,13 @@ function OnePagePart() {
                 <div className="w-full md:border-b border-[gray] pb-5">
                     <p className="text-[#00000099] text-[16px] font-medium md:text-[20px]">{product.description}</p>
                 </div>
-                <div className="py-6 flex flex-col-reverse md:flex-row gap-5 items-center justify-between">
-                    <div className={cartItem ? "w-full md:w-auto px-10 py-4 md:gap-5 rounded-full text-[black] border flex items-center justify-between font-medium" : "hidden"}>
-                      <button onClick={() => decrease(product.id)}>-</button>
-                      <span>{cartItem?.qty}</span>
+                <div className="py-6 flex flex-col md:flex-row gap-5 items-center justify-between">
+                    <div className={cartItem ? "w-full md:w-auto px-10 py-1.5 md:gap-5 rounded-full text-[30px] text-[black] border flex items-center justify-between font-medium" : "hidden"}>
+                      <button className="" onClick={() => decrease(product.id)}>-</button>
+                      <span className="text-[20px]">{cartItem?.qty}</span>
                       <button onClick={() => increase(product)}>+</button>
                     </div>
-                    <button onClick={() => cartItem ? removeTocart(product.id) : addTocart(product)} className="w-full rounded-full bg-[black] py-4 text-white font-medium duration-300 hover:bg-[gray]">
+                    <button onClick={() => cartItem ? removeTocart(product.id) : addTocart(product)} className={`${cartItem? cartItem?.qty > 0 ? "px-6" : "w-full" : "w-full"}  md:w-full rounded-full bg-[black] py-4 text-white font-medium duration-300 hover:bg-[gray]`}>
                       {cartItem ? "Remove from Cart" : "Add to Cart"}
                     </button>
                 </div>
